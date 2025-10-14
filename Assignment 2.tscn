@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn0s6woufi3d"]
+
+[ext_resource type="Script" uid="uid://cfbn4ysfb3iv" path="res://Scripts/XRScript.gd" id="1_o0pew"]
+
+[sub_resource type="Environment" id="Environment_77bb8"]
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_o0pew"]
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_o0pew")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_77bb8")
+camera_attributes = SubResource("CameraAttributesPractical_o0pew")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment"]
+size = Vector3(100, 0.1, 100)
+
+[node name="XROrigin3D" type="XROrigin3D" parent="WorldEnvironment"]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="WorldEnvironment/XROrigin3D"]
