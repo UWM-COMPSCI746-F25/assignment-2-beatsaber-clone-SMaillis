@@ -1,10 +1,13 @@
-[gd_scene load_steps=18 format=3 uid="uid://bn0s6woufi3d"]
+[gd_scene load_steps=22 format=3 uid="uid://bn0s6woufi3d"]
 
 [ext_resource type="Script" uid="uid://cfbn4ysfb3iv" path="res://Scripts/XRScript.gd" id="1_o0pew"]
 [ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_a46n5"]
+[ext_resource type="Script" uid="uid://7f0ku0h7l2np" path="res://Scripts/RedBox.gd" id="2_agc47"]
 [ext_resource type="Material" uid="uid://cbhunalct2ixy" path="res://Materials/Red.tres" id="2_djlhv"]
 [ext_resource type="Script" uid="uid://ds108o6r8kdl6" path="res://Scripts/LeftPointer.gd" id="3_6m3sd"]
 [ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_ms3yt"]
+[ext_resource type="Material" uid="uid://cnpi2th6rtssd" path="res://Materials/Blue.tres" id="4_31ne1"]
+[ext_resource type="Script" uid="uid://dvxtdn12l156j" path="res://Scripts/BlueBox.gd" id="4_i6iin"]
 [ext_resource type="Material" uid="uid://bfnnbrhumyp87" path="res://Materials/TransparentBlue.tres" id="5_acwm7"]
 [ext_resource type="Script" uid="uid://dj0df5cva70jm" path="res://Scripts/RightPointer.gd" id="5_l5mfx"]
 [ext_resource type="Script" uid="uid://vjj87r8yojmt" path="res://Scripts/LineRendererLeft.gd" id="7_l5mfx"]
@@ -18,8 +21,11 @@
 [sub_resource type="BoxShape3D" id="BoxShape3D_ms3yt"]
 size = Vector3(100, 0.1, 100)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_3426p"]
-size = Vector3(0.2, 0.2, 0.2)
+[sub_resource type="BoxShape3D" id="BoxShape3D_i6iin"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_31ne1"]
+size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_3426p"]
 radius = 0.1
@@ -46,33 +52,51 @@ size = Vector3(100, 0.1, 100)
 [node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
 shape = SubResource("BoxShape3D_ms3yt")
 
-[node name="TestBox" type="RigidBody3D" parent="WorldEnvironment"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+[node name="BlueBox" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -10)
+collision_layer = 257
+collision_mask = 257
+script = ExtResource("4_i6iin")
 
-[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/TestBox"]
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/BlueBox"]
+material_override = ExtResource("4_31ne1")
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/BlueBox"]
+shape = SubResource("BoxShape3D_i6iin")
+
+[node name="RedBox" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -10)
+collision_layer = 513
+collision_mask = 513
+script = ExtResource("2_agc47")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/RedBox"]
 material_override = ExtResource("2_djlhv")
-size = Vector3(0.2, 0.2, 0.2)
+size = Vector3(0.3, 0.3, 0.3)
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/TestBox"]
-shape = SubResource("BoxShape3D_3426p")
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/RedBox"]
+shape = SubResource("BoxShape3D_31ne1")
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
 
-[node name="Left Hand" type="XRController3D" parent="XROrigin3D"]
+[node name="Left_Hand" type="XRController3D" parent="XROrigin3D"]
 tracker = &"left_hand"
 script = ExtResource("3_6m3sd")
 
-[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/Left Hand" instance=ExtResource("2_a46n5")]
+[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/Left_Hand" instance=ExtResource("2_a46n5")]
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
-[node name="Area3D" type="Area3D" parent="XROrigin3D/Left Hand"]
+[node name="Area3D" type="Area3D" parent="XROrigin3D/Left_Hand"]
+collision_layer = 256
+collision_mask = 256
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Left Hand/Area3D"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Left_Hand/Area3D"]
 shape = SubResource("SphereShape3D_3426p")
 
-[node name="LineRendererLeft" type="MeshInstance3D" parent="XROrigin3D/Left Hand"]
+[node name="LineRendererLeft" type="MeshInstance3D" parent="XROrigin3D/Left_Hand"]
 material_override = ExtResource("5_acwm7")
 mesh = SubResource("ImmediateMesh_acwm7")
 skeleton = NodePath("../../..")
@@ -86,6 +110,8 @@ script = ExtResource("5_l5mfx")
 transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="Area3D" type="Area3D" parent="XROrigin3D/Right Hand"]
+collision_layer = 512
+collision_mask = 512
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Right Hand/Area3D"]
 shape = SubResource("SphereShape3D_3426p")
@@ -95,10 +121,10 @@ material_override = ExtResource("8_6m3sd")
 mesh = SubResource("ImmediateMesh_6m3sd")
 script = ExtResource("10_61rhv")
 
-[connection signal="button_pressed" from="XROrigin3D/Left Hand" to="XROrigin3D/Left Hand" method="_on_button_pressed"]
-[connection signal="button_released" from="XROrigin3D/Left Hand" to="XROrigin3D/Left Hand" method="_on_button_released"]
-[connection signal="body_entered" from="XROrigin3D/Left Hand/Area3D" to="XROrigin3D/Left Hand" method="_on_area_3d_body_entered"]
-[connection signal="body_exited" from="XROrigin3D/Left Hand/Area3D" to="XROrigin3D/Left Hand" method="_on_area_3d_body_exited"]
+[connection signal="button_pressed" from="XROrigin3D/Left_Hand" to="XROrigin3D/Left_Hand" method="_on_button_pressed"]
+[connection signal="button_released" from="XROrigin3D/Left_Hand" to="XROrigin3D/Left_Hand" method="_on_button_released"]
+[connection signal="body_entered" from="XROrigin3D/Left_Hand/Area3D" to="XROrigin3D/Left_Hand" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="XROrigin3D/Left_Hand/Area3D" to="XROrigin3D/Left_Hand" method="_on_area_3d_body_exited"]
 [connection signal="button_pressed" from="XROrigin3D/Right Hand" to="XROrigin3D/Right Hand" method="_on_button_pressed"]
 [connection signal="button_released" from="XROrigin3D/Right Hand" to="XROrigin3D/Right Hand" method="_on_button_released"]
 [connection signal="body_entered" from="XROrigin3D/Right Hand/Area3D" to="XROrigin3D/Right Hand" method="_on_area_3d_body_entered"]

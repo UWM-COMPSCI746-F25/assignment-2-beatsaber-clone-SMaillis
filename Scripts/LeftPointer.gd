@@ -25,11 +25,16 @@ func _physics_process(delta):
 	query.collide_with_areas = true
 	var result = space_state.intersect_ray(query)
 	
+	if result:
+		if result.collider.name == "BlueBox":
+			print("Collision At: ", result.collider.name)
+	
 	$"LineRendererLeft".points[0] = origin
 	$"LineRendererLeft".points[1] = end
 
 func _on_area_3d_body_entered(area):
 	collided_area = area
+	
 
 func _on_area_3d_body_exited(area):
 	collided_area = null
