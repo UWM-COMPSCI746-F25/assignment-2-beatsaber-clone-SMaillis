@@ -1,10 +1,32 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn0s6woufi3d"]
+[gd_scene load_steps=18 format=3 uid="uid://bn0s6woufi3d"]
 
 [ext_resource type="Script" uid="uid://cfbn4ysfb3iv" path="res://Scripts/XRScript.gd" id="1_o0pew"]
+[ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_a46n5"]
+[ext_resource type="Material" uid="uid://cbhunalct2ixy" path="res://Materials/Red.tres" id="2_djlhv"]
+[ext_resource type="Script" uid="uid://ds108o6r8kdl6" path="res://Scripts/LeftPointer.gd" id="3_6m3sd"]
+[ext_resource type="PackedScene" uid="uid://bc8lh0rihgxvi" path="res://Quest2Controllers/OculusQuest2TouchController_Right.gltf" id="3_ms3yt"]
+[ext_resource type="Material" uid="uid://bfnnbrhumyp87" path="res://Materials/TransparentBlue.tres" id="5_acwm7"]
+[ext_resource type="Script" uid="uid://dj0df5cva70jm" path="res://Scripts/RightPointer.gd" id="5_l5mfx"]
+[ext_resource type="Script" uid="uid://vjj87r8yojmt" path="res://Scripts/LineRendererLeft.gd" id="7_l5mfx"]
+[ext_resource type="Material" uid="uid://do2k2tn2s2tuw" path="res://Materials/TransparentRed.tres" id="8_6m3sd"]
+[ext_resource type="Script" uid="uid://bd7f2dypsbnfv" path="res://Scripts/LineRendererRight.gd" id="10_61rhv"]
 
 [sub_resource type="Environment" id="Environment_77bb8"]
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_o0pew"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ms3yt"]
+size = Vector3(100, 0.1, 100)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3426p"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3426p"]
+radius = 0.1
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_acwm7"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_6m3sd"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_o0pew")
@@ -16,9 +38,68 @@ camera_attributes = SubResource("CameraAttributesPractical_o0pew")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 5, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment"]
+[node name="StaticBody3D" type="StaticBody3D" parent="WorldEnvironment"]
+
+[node name="Ground" type="CSGBox3D" parent="WorldEnvironment/StaticBody3D"]
 size = Vector3(100, 0.1, 100)
 
-[node name="XROrigin3D" type="XROrigin3D" parent="WorldEnvironment"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/StaticBody3D"]
+shape = SubResource("BoxShape3D_ms3yt")
 
-[node name="XRCamera3D" type="XRCamera3D" parent="WorldEnvironment/XROrigin3D"]
+[node name="TestBox" type="RigidBody3D" parent="WorldEnvironment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="WorldEnvironment/TestBox"]
+material_override = ExtResource("2_djlhv")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="WorldEnvironment/TestBox"]
+shape = SubResource("BoxShape3D_3426p")
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="Left Hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"left_hand"
+script = ExtResource("3_6m3sd")
+
+[node name="OculusQuest2TouchController_Left" parent="XROrigin3D/Left Hand" instance=ExtResource("2_a46n5")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/Left Hand"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Left Hand/Area3D"]
+shape = SubResource("SphereShape3D_3426p")
+
+[node name="LineRendererLeft" type="MeshInstance3D" parent="XROrigin3D/Left Hand"]
+material_override = ExtResource("5_acwm7")
+mesh = SubResource("ImmediateMesh_acwm7")
+skeleton = NodePath("../../..")
+script = ExtResource("7_l5mfx")
+
+[node name="Right Hand" type="XRController3D" parent="XROrigin3D"]
+tracker = &"right_hand"
+script = ExtResource("5_l5mfx")
+
+[node name="OculusQuest2TouchController_Right" parent="XROrigin3D/Right Hand" instance=ExtResource("3_ms3yt")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="XROrigin3D/Right Hand"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="XROrigin3D/Right Hand/Area3D"]
+shape = SubResource("SphereShape3D_3426p")
+
+[node name="LineRendererRight" type="MeshInstance3D" parent="XROrigin3D/Right Hand"]
+material_override = ExtResource("8_6m3sd")
+mesh = SubResource("ImmediateMesh_6m3sd")
+script = ExtResource("10_61rhv")
+
+[connection signal="button_pressed" from="XROrigin3D/Left Hand" to="XROrigin3D/Left Hand" method="_on_button_pressed"]
+[connection signal="button_released" from="XROrigin3D/Left Hand" to="XROrigin3D/Left Hand" method="_on_button_released"]
+[connection signal="body_entered" from="XROrigin3D/Left Hand/Area3D" to="XROrigin3D/Left Hand" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="XROrigin3D/Left Hand/Area3D" to="XROrigin3D/Left Hand" method="_on_area_3d_body_exited"]
+[connection signal="button_pressed" from="XROrigin3D/Right Hand" to="XROrigin3D/Right Hand" method="_on_button_pressed"]
+[connection signal="button_released" from="XROrigin3D/Right Hand" to="XROrigin3D/Right Hand" method="_on_button_released"]
+[connection signal="body_entered" from="XROrigin3D/Right Hand/Area3D" to="XROrigin3D/Right Hand" method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="XROrigin3D/Right Hand/Area3D" to="XROrigin3D/Right Hand" method="_on_area_3d_body_exited"]
