@@ -5,3 +5,5 @@ extends Node3D
 
 func _process(delta):
 	global_position += dir * (speed * delta)
+	if global_position.z > 5:
+		queue_free()
