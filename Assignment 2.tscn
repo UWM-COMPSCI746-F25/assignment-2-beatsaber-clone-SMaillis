@@ -49,6 +49,8 @@ size = Vector3(5, 5, 1)
 script = ExtResource("6_2w6ym")
 
 [node name="Timer" type="Timer" parent="WorldEnvironment/BoxSpawner"]
+wait_time = 2.0
+autostart = true
 
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
