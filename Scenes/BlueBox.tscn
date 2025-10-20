@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bkoqrhc4ujodj"]
+
+[ext_resource type="Script" uid="uid://3ec0vhf6ihm8" path="res://Scripts/BlueCube.gd" id="1_0u8mf"]
+[ext_resource type="Material" uid="uid://cnpi2th6rtssd" path="res://Materials/Blue.tres" id="2_62567"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_62567"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="BlueBoxScene" type="Node3D"]
+script = ExtResource("1_0u8mf")
+
+[node name="BlueBox" type="Area3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="BlueBox"]
+material_override = ExtResource("2_62567")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BlueBox"]
+shape = SubResource("BoxShape3D_62567")

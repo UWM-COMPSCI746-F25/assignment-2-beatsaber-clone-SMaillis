@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bndjvrravc2yx"]
+
+[ext_resource type="Material" uid="uid://cbhunalct2ixy" path="res://Materials/Red.tres" id="1_eryvs"]
+[ext_resource type="Script" uid="uid://bxfb2mjgi714v" path="res://Scripts/RedCube.gd" id="1_xqcyy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xqcyy"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="RedBoxScene" type="Node3D"]
+script = ExtResource("1_xqcyy")
+
+[node name="RedBox" type="Area3D" parent="."]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="RedBox"]
+material_override = ExtResource("1_eryvs")
+size = Vector3(0.2, 0.2, 0.2)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RedBox"]
+shape = SubResource("BoxShape3D_xqcyy")
