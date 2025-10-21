@@ -5,7 +5,7 @@ extends Node3D
 
 func _ready():
 	global_position.y = randf_range(0.5, 2)
-	global_position.x = randf_range(-0.5, 1)
+	global_position.x = 0.75
 
 func _process(delta):
 	global_position += dir * (speed * delta)

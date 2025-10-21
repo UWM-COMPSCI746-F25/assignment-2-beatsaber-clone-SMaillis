@@ -20,7 +20,6 @@ func _physics_process(delta):
 	
 	if result:
 		if result.collider.name == "RedBox":
-			print("Collision At: ", result.collider.name)
 			result.collider.get_parent().queue_free()
 			$HitSound.play()
 	

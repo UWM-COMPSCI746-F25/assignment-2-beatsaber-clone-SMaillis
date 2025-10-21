@@ -6,7 +6,6 @@ extends Node3D
 var spawned = false
 
 func _process(delta):
-	print(time.time_left)
 	if time.time_left < 0.05:
 		if not spawned:
 			var block_spawn = randi() % 2
