@@ -1,10 +1,10 @@
 extends Node3D
 
 @export var dir = Vector3(0,0,1)
-@export var speed = 5
+@export var speed = 5.0
 
 func _ready():
-	global_position.y = 2
+	global_position.y = randf_range(0.5, 2)
 	global_position.x = randf_range(-0.5, 1)
 
 func _process(delta):

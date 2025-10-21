@@ -22,6 +22,7 @@ func _physics_process(delta):
 		if result.collider.name == "BlueBox":
 			print("Collision At: ", result.collider.name)
 			result.collider.get_parent().queue_free()
+			$HitSound.play()
 	
 	$"LineRendererLeft".points[0] = origin
 	$"LineRendererLeft".points[1] = end

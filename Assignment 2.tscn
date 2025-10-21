@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bn0s6woufi3d"]
+[gd_scene load_steps=18 format=3 uid="uid://bn0s6woufi3d"]
 
 [ext_resource type="Script" uid="uid://cfbn4ysfb3iv" path="res://Scripts/XRScript.gd" id="1_o0pew"]
 [ext_resource type="PackedScene" uid="uid://cnwp7ndjr4s8y" path="res://Quest2Controllers/OculusQuest2TouchController_Left.gltf" id="2_a46n5"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://bfnnbrhumyp87" path="res://Materials/TransparentBlue.tres" id="5_acwm7"]
 [ext_resource type="Script" uid="uid://dj0df5cva70jm" path="res://Scripts/RightPointer.gd" id="5_l5mfx"]
 [ext_resource type="Script" uid="uid://dsoe8lsd3si8t" path="res://Scripts/BoxSpawner.gd" id="6_2w6ym"]
+[ext_resource type="AudioStream" uid="uid://cnn0pb28384yo" path="res://Audio/hit_sound_effect.mp3" id="7_agc47"]
 [ext_resource type="Script" uid="uid://vjj87r8yojmt" path="res://Scripts/LineRendererLeft.gd" id="7_l5mfx"]
 [ext_resource type="Material" uid="uid://do2k2tn2s2tuw" path="res://Materials/TransparentRed.tres" id="8_6m3sd"]
 [ext_resource type="Script" uid="uid://bd7f2dypsbnfv" path="res://Scripts/LineRendererRight.gd" id="10_61rhv"]
@@ -76,6 +77,9 @@ mesh = SubResource("ImmediateMesh_acwm7")
 skeleton = NodePath("../../..")
 script = ExtResource("7_l5mfx")
 
+[node name="HitSound" type="AudioStreamPlayer3D" parent="XROrigin3D/Left_Hand"]
+stream = ExtResource("7_agc47")
+
 [node name="Right Hand" type="XRController3D" parent="XROrigin3D"]
 tracker = &"right_hand"
 script = ExtResource("5_l5mfx")
@@ -94,6 +98,9 @@ shape = SubResource("SphereShape3D_3426p")
 material_override = ExtResource("8_6m3sd")
 mesh = SubResource("ImmediateMesh_6m3sd")
 script = ExtResource("10_61rhv")
+
+[node name="HitSound" type="AudioStreamPlayer3D" parent="XROrigin3D/Right Hand"]
+stream = ExtResource("7_agc47")
 
 [connection signal="button_pressed" from="XROrigin3D/Left_Hand" to="XROrigin3D/Left_Hand" method="_on_button_pressed"]
 [connection signal="button_pressed" from="XROrigin3D/Right Hand" to="XROrigin3D/Right Hand" method="_on_button_pressed"]
